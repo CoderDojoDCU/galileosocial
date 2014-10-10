@@ -1,0 +1,17 @@
+{
+  "name": "galileo-social-express",
+  "version": "1.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/CoderDojoDCU/galileo-social-express"
+  },
+  "author": "Noel King",
+  "license": "MIT",
+  "description": "Node express app that highlights trends on an Intel Galileo Board",
+  "dependencies": {
+    "express": "^4.9.5",
+    "galileo-io": "~0.3.3",
+    "twit": "~1.1.18"
+  }
+}

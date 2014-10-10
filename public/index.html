@@ -1,0 +1,155 @@
+<html>
+	
+	<head>
+		<title>CoderDojo - Social Network </title>
+		<style>
+			body {
+				background: black;
+				color: pink;
+			}
+
+			h1 {
+				padding-top: 20px;
+				text-align: center;
+				font-size: 40px;
+			}
+
+			h2 {	
+				text-align: center;
+				font-size: 30px;
+				color: gray;
+			}
+			
+			input#green {
+				border: none;
+				border-bottom: 2px solid green;
+				background: black;
+				width: 350px;
+				font-size: 25px;
+				color: white;
+				float: left;
+			}
+			
+			input#red {
+				background: black;
+				border: none;
+				border-bottom: 2px solid red;
+				font-family: "Comic Sans MS";
+				font-size: 25px;
+				color: white;
+				width: 350px;
+				float: right;
+				text-align: right;
+			}
+			
+			input.input {
+				margin-top: 20px;
+				margin-bottom: 20px;
+			}
+			
+			button#send {
+				background: blue;
+				color: white;
+				padding: 10px;
+				width: 70px;
+				border: 1px solid white;
+				border-radius: 10px;
+			}
+
+			div.inputDiv {
+				width: 100%;
+				margin: 5px;
+				margin-right: 30px;
+				height: 70px;
+			}
+
+			div#greenchat {
+				color: green;
+				width: 45%;
+				float: left;
+			}
+
+			div#redchat {
+				color: red;
+				text-align: right;
+				width: 45%;
+				float: right;
+			}
+
+			img#twitterimg {
+				width: 50px;
+			}
+
+			span.chatname {
+				color: white;
+				width: 60%;
+			}
+
+			span.message {
+				width: 60%;
+			}
+
+			div.tweet {
+				min-height: 50px;
+			}
+			
+		</style>
+
+		<script src="jquery.js"></script>
+		<script>
+		  function trend() {
+		  	var red = $("#red").val();
+		  	var green = $("#green").val();
+		  	$("#redchat").empty();
+		  	$("#greenchat").empty();
+
+			$.get("http://localhost:3000/galileosocialgreen?green="+green,function(data) {
+				processTweets(data,  "#greenchat", "left");
+			});
+
+			$.get("http://localhost:3000/galileosocialred?red="+red,function(data) {
+				console.log(data);
+				processTweets(data,  "#redchat", "right");
+			});
+		  }
+
+		  function processTweets(tweets, divId, float) {
+		  	console.log(tweets.length)
+		  	if(tweets.length == 0) {
+		  		$(divId).prepend( "<div id='chatmessage'>Not trending</div>");
+		  	} else {
+			  	for(var i = 0; i < tweets.length; i++) {
+			  		displayTweet(tweets[i].user, tweets[i].message, tweets[i].profile, divId, float);
+			  	}
+			} 
+		  }
+
+		  function displayTweet(from, message, imageUrl, divId, float) {
+		  	$(divId).prepend( "<div id='chatmessage'><div class='tweet'><img style='float: "+float+"' id='twitterimg' src='"+imageUrl+"'/>"
+		  	  +	"<span class='chatname'>"+from +" says "
+		  	  + " </span><br/> " 
+		  		+ "<span class='message'>"+message+"</span>"
+		  		+"</div></div>" );
+		  }
+		</script>
+	</head>
+	<body>
+		<h1>CoderDojo - Galileo Social </h1>
+		<div class="inputDiv">
+			<input id="green" type="text" placeholder="Green trend"
+				class="input"></input>
+			<input id="red" type="text" placeholder="Red trend"
+				class="input"></input>
+		</div>
+		<div class="buttons">
+			<button id="send" onclick="trend()">Trend</button>
+		</div>
+		<h2>Social Chat</h2>
+		<div id="socialchat">
+			<div id="greenchat"></div>
+			<div id="redchat"></div>
+		</div>
+		</div>
+	</body>
+	
+</html>
