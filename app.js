@@ -6,7 +6,7 @@ var Galileo = require("galileo-io");
 var board = new Galileo();
 
 var pin = 9;
-var trend = "GalileoGirls"
+var trend = "GalileoGirls";
 var boardAvailable = false;
 var currentTweets = [];
 var latestId = 0;
@@ -16,7 +16,7 @@ var T = new Twit({
   , consumer_secret:      ''
   , access_token:         ''
   , access_token_secret:  ''
-})
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -50,7 +50,7 @@ function queryTwitter(trendMessage, pin) {
 				}, 5000);
 		  }
 		  else if(data.statuses && data.statuses.length > 0) {
-		  	getTweetList(data.statuses)
+		  	getTweetList(data.statuses);
 		  	processTrend(currentTweets, pin);
 		  }
 		});
