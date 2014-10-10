@@ -72,7 +72,7 @@ function getTweetList(tweetList) {
 	for(var i = 0; i < tweetList.length; i++) {
 		var tweet = processTweetData(tweetList[i]);
 		currentTweets.push(tweet);
-		setHightestId(tweet.id);
+		setHighestId(tweet.id);
 	}
 }
 
@@ -100,7 +100,7 @@ function flash(pin, increment, value) {
 		}, 200);
 }
 
-function setHightestId(currentId) {
+function setHighestId(currentId) {
 	if(currentId > latestId) 
 		latestId = currentId;
 }
