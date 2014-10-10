@@ -58,7 +58,7 @@ function queryTwitter(trendMessage, pin) {
 }
 
 function processTweetData(tweetData) {
-	var tweet = new Object();
+	var tweet = {};
 	tweet.created = tweetData.created_at;
 	tweet.message = tweetData.text;
 	tweet.user = tweetData.user.screen_name;
