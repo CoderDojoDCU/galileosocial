@@ -1,6 +1,6 @@
 {
   "name": "galileo-social-express",
-  "version": "1.0",
+  "version": "1.0.0",
   "main": "app.js",
   "repository": {
     "type": "git",
