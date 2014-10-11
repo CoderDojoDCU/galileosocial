@@ -7,9 +7,10 @@ var board = new Galileo();
 
 var pin = 9;
 var trend = "GalileoGirls"
-var boardAvailable = false;
+var boardAvailable = true;
 var currentTweets = [];
 var latestId = 0;
+
 
 var T = new Twit({
     consumer_key:         ''
@@ -20,7 +21,7 @@ var T = new Twit({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-var server = app.listen(3000, function() {
+var server = app.listen(80, function() {
 	console.log('Listening on port %d', server.address().port);
 });
 
@@ -58,7 +59,7 @@ function queryTwitter(trendMessage, pin) {
 }
 
 function processTweetData(tweetData) {
-	var tweet = new Object();
+	var tweet = {};
 	tweet.created = tweetData.created_at;
 	tweet.message = tweetData.text;
 	tweet.user = tweetData.user.screen_name;
@@ -79,7 +80,6 @@ function getTweetList(tweetList) {
 function processTrend(tweeters, pin) {
 	if(tweeters.length > 1) {	
 		executePin(pin);
-		console.log(tweeters);
 	}
 	setTimeout(function () {
 		queryTwitter(trend, pin)
@@ -88,16 +88,21 @@ function processTrend(tweeters, pin) {
 
 function executePin(pin) {
 	if(boardAvailable) {
-	  	setTimeout(flash(pin, 0, 0), 100);
+	  	setTimeout(function () {
+	  	  flash(pin, 0, 0)
+	  	}, 300);
 	}
 }
 
 function flash(pin, increment, value) {
-	board.digitalWrite(pin, 1);
-	if(increment > 50)
-		setTimeout(function () {
-			flash(pin, increment++, (value ^= 1));
-		}, 200);
+  console.log(value + " " + increment);
+	board.digitalWrite(pin, value);
+	if(increment < 50) {
+	   setTimeout(function() {
+	      increment += 1;
+        flash(pin, increment, (value ^= 1));
+    }, 500);
+	}
 }
 
 function setHightestId(currentId) {
